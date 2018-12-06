@@ -40,7 +40,7 @@ const getTransitionBytes = (mode, speed, repeat) => {
   return bytes[mode]
 }
 
-export default class Luxafor {
+export class Luxafor {
   /**
    * Constructor for the Luxafor class. Connects to the Luxafor device.
    *
