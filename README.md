@@ -70,6 +70,14 @@ If you have a custom Vendor and Product ID you can specify those too.
 const luxafor = new Luxafor(vendorId, productId)
 ```
 
+#### `execute`
+
+Executes the effect you've chosen by writing the bytes to the Luxafor device.
+
+```js
+luxafor.execute()
+```
+
 #### `setColor`
 
 Sets the color of the light to a specific RGB value.
@@ -78,7 +86,7 @@ Sets the color of the light to a specific RGB value.
 luxafor.setColor(255, 0, 0) // bright red
 ```
 
-### `setLight`
+#### `setLight`
 
 Specifies which light you want to change.
 
@@ -86,10 +94,42 @@ Specifies which light you want to change.
 luxafor.setLight(LUXAFOR_LIGHT_3)
 ```
 
-### `setLights`
+#### `setLights`
 
 Specifies which lights you want to change.
 
 ```js
 luxafor.setLights([LUXAFOR_LIGHT_1, LUXAFOR_LIGHT_4])
+```
+
+#### `setMode`
+
+Sets the lighting mode.
+
+```js
+luxafor.setMode(LUXAFOR_MODE_FADE)
+```
+
+#### `setPattern`
+
+Sets the Luxafor pattern, this will also change the mode to `LUXAFOR_MODE_PATTERN`.
+
+```js
+luxafor.setPattern(LUXAFOR_PATTERN_POLICE)
+```
+
+#### `setRepeat`
+
+Specifies how many times an effect should repeat.
+
+```js
+luxafor.setRepeat(5) // repeat 5 times
+```
+
+#### `setSpeed`
+
+Sets the speed of the effect.
+
+```js
+luxafor.setSpeed(10) // 0-255
 ```
