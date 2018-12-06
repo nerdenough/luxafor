@@ -4,6 +4,8 @@ A simple JavaScript library to control your Luxafor device.
 
 ## Getting Started
 
+### Installation
+
 Install @nerdenough/luxafor using either npm or yarn.
 
 ```sh
@@ -133,3 +135,11 @@ Sets the speed of the effect.
 ```js
 luxafor.setSpeed(10) // 0-255
 ```
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+## Acknowledgements
+
+Based on [node-luxafor](https://github.com/mattgoucher/node-luxafor) by Matt Goucher
