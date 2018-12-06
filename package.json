@@ -1,0 +1,21 @@
+{
+  "name": "@nerdenough/luxafor",
+  "version": "0.1.0",
+  "main": "./lib/luxafor.js",
+  "author": "Brendan Goodenough <brendan@goodenough.nz>",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src -d lib"
+  },
+  "dependencies": {
+    "node-hid": "^0.7.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
+    "prettier": "^1.15.3"
+  }
+}
