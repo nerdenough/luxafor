@@ -5,7 +5,8 @@
   "author": "Brendan Goodenough <brendan@goodenough.nz>",
   "license": "MIT",
   "scripts": {
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "docs": "jsdoc -t node_modules/@otris/jsdoc-tsd -r src -d lib/luxafor.d.ts"
   },
   "dependencies": {
     "node-hid": "^0.7.4"
@@ -14,8 +15,10 @@
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.2.0",
     "@babel/preset-env": "^7.2.0",
+    "@otris/jsdoc-tsd": "^1.0.4",
     "eslint": "^5.9.0",
     "eslint-config-prettier": "^3.3.0",
+    "jsdoc": "^3.5.5",
     "prettier": "^1.15.3"
   }
 }
