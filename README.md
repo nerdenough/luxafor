@@ -12,7 +12,7 @@ npm install -S @nerdenough/luxafor
 yarn add @nerdenough/luxafor
 ```
 
-## Usage
+### Usage
 
 Here's a simple example of how you can change the front LEDs to be red.
 
