@@ -1,6 +1,6 @@
 # @nerdenough/luxafor
 
-A simple JavaScript library to control your Luxafor device.
+A simple JavaScript library to control your [Luxafor](https://luxafor.com) device.
 
 ## Getting Started
 
@@ -141,5 +141,7 @@ luxafor.setSpeed(10) // 0-255
 [MIT](https://opensource.org/licenses/MIT)
 
 ## Acknowledgements
+
+[Luxafor](https://luxafor.com) for their devices.
 
 Based on [node-luxafor](https://github.com/mattgoucher/node-luxafor) by Matt Goucher
