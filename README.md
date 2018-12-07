@@ -1,6 +1,6 @@
 # @nerdenough/luxafor
 
-A simple JavaScript library to control your [Luxafor](https://luxafor.com) device.
+A simple JS library to control your [Luxafor](https://luxafor.com) device.
 
 ## Getting Started
 
@@ -19,129 +19,70 @@ yarn add @nerdenough/luxafor
 Here's a simple example of how you can change the front LEDs to be red.
 
 ```js
-import { Luxafor, LUXAFOR_LIGHT_FRONT } from '@nerdenough/luxafor'
-
-const luxafor = new Luxafor()
-luxafor
-  .setColor(255, 0, 0)
-  .setLight(LUXAFOR_LIGHT_FRONT)
-  .execute()
+const luxafor = require('@nerdenough/luxafor')
+luxafor.color({ led: luxafor.LUXAFOR_LED_B, red: 255 })
 ```
 
 ## In Depth
 
+### `color`
+
+Sets the color for the chosen LEDs with the specified color values. Setting the
+speed will fade to the new color instead of an instant change.
+
+### `strobe`
+
+Activates the strobe effect for the chosen LEDs with the specified color values,
+speed, and repetitions.
+
+### `wave`
+
+Activates one of 5 wave patterns with the specified color values, speed, and
+repetitions. Affects all LEDs.
+
+### `pattern`
+
+Activates one of the 8 pre-programmed Luxafor patterns. Affects all LEDs.
+
 ### Constants
 
-#### Lights
+#### LEDs
 
-- `LUXAFOR_LIGHT_1` - Lower light on the back
-- `LUXAFOR_LIGHT_2` - Middle light on the back
-- `LUXAFOR_LIGHT_3` - Upper light on the back
-- `LUXAFOR_LIGHT_4` - Lower light on the front
-- `LUXAFOR_LIGHT_5` - Middle light on the front
-- `LUXAFOR_LIGHT_6` - Upper light on the front
-- `LUXAFOR_LIGHT_FRONT` - All lights on the front
-- `LUXAFOR_LIGHT_BACK` - All lights on the back
-- `LUXAFOR_LIGHT_ALL` - All lights
+| Constant          | Description      |
+| ----------------- | ---------------- |
+| `LUXAFOR_LED_1`   | Front lower LED  |
+| `LUXAFOR_LED_2`   | Front middle LED |
+| `LUXAFOR_LED_3`   | Front upper LED  |
+| `LUXAFOR_LED_4`   | Rear lower LED   |
+| `LUXAFOR_LED_5`   | Rear middle LED  |
+| `LUXAFOR_LED_6`   | Rear upper LED   |
+| `LUXAFOR_LED_A`   | All rear LEDs    |
+| `LUXAFOR_LED_B`   | All front LEDs   |
+| `LUXAFOR_LED_ALL` | All LEDs         |
 
-#### Mode
+#### Waves
 
-- `LUXAFOR_MODE_COLOR` - Solid color
-- `LUXAFOR_MODE_FADE` - Fade in and out
-- `LUXAFOR_MODE_STROBE` - Strobe lights
-- `LUXAFOR_MODE_WAVE` - Wave
-- `LUXAFOR_MODE_PATTERN` - Built in pattern
+| Constant         | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| `LUXAFOR_WAVE_1` | I have no idea wtf this does                     |
+| `LUXAFOR_WAVE_2` | Single color (other LEDs turned off), small wave |
+| `LUXAFOR_WAVE_3` | Single color (other LEDs turned off), large wave |
+| `LUXAFOR_WAVE_4` | Dual color (other LEDs turned on), small wave    |
+| `LUXAFOR_WAVE_5` | Dual color (other LEDs turned on), large wave    |
 
-#### Pattern
+#### Patterns
 
-- `LUXAFOR_PATTERN_POLICE` - Red and blue flashing pattern
-
-### `Luxafor` Class
-
-#### Constructor
-
-The Luxafor class can be instantiated without any arguments.
-
-```js
-const luxafor = new Luxafor()
-```
-
-If you have a custom Vendor and Product ID you can specify those too.
-
-```js
-const luxafor = new Luxafor(vendorId, productId)
-```
-
-#### `execute`
-
-Executes the effect you've chosen by writing the bytes to the Luxafor device.
-
-```js
-luxafor.execute()
-```
-
-#### `setColor`
-
-Sets the color of the light to a specific RGB value.
-
-```js
-luxafor.setColor(255, 0, 0) // bright red
-```
-
-#### `setLight`
-
-Specifies which light you want to change.
-
-```js
-luxafor.setLight(LUXAFOR_LIGHT_3)
-```
-
-#### `setLights`
-
-Specifies which lights you want to change.
-
-```js
-luxafor.setLights([LUXAFOR_LIGHT_1, LUXAFOR_LIGHT_4])
-```
-
-#### `setMode`
-
-Sets the lighting mode.
-
-```js
-luxafor.setMode(LUXAFOR_MODE_FADE)
-```
-
-#### `setPattern`
-
-Sets the Luxafor pattern, this will also change the mode to `LUXAFOR_MODE_PATTERN`.
-
-```js
-luxafor.setPattern(LUXAFOR_PATTERN_POLICE)
-```
-
-#### `setRepeat`
-
-Specifies how many times an effect should repeat.
-
-```js
-luxafor.setRepeat(5) // repeat 5 times
-```
-
-#### `setSpeed`
-
-Sets the speed of the effect.
-
-```js
-luxafor.setSpeed(10) // 0-255
-```
+| Constant            | Description     |
+| ------------------- | --------------- |
+| `LUXAFOR_PATTERN_1` | Luxafor pattern |
+| `LUXAFOR_PATTERN_2` | TODO            |
+| `LUXAFOR_PATTERN_3` | TODO            |
+| `LUXAFOR_PATTERN_4` | TODO            |
+| `LUXAFOR_PATTERN_5` | Police pattern  |
+| `LUXAFOR_PATTERN_6` | TODO            |
+| `LUXAFOR_PATTERN_7` | TODO            |
+| `LUXAFOR_PATTERN_8` | Rainbow pattern |
 
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
-
-## Acknowledgements
-
-[Luxafor](https://luxafor.com) for their devices.
-
-Based on [node-luxafor](https://github.com/mattgoucher/node-luxafor) by Matt Goucher
