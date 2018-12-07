@@ -1,6 +1,6 @@
 {
   "name": "@nerdenough/luxafor",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "main": "./lib/luxafor.js",
   "author": "Brendan Goodenough <brendan@goodenough.nz>",
   "license": "MIT",
