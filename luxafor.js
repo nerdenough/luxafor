@@ -21,8 +21,8 @@ const LUXAFOR_LED_3 = 0x03
 const LUXAFOR_LED_4 = 0x04
 const LUXAFOR_LED_5 = 0x05
 const LUXAFOR_LED_6 = 0x06
-const LUXAFOR_LED_A = 0x41
-const LUXAFOR_LED_B = 0x42
+const LUXAFOR_LED_FRONT = 0x41
+const LUXAFOR_LED_BACK = 0x42
 const LUXAFOR_LED_ALL = 0xff
 
 // Waves
@@ -133,8 +133,8 @@ module.exports = {
   LUXAFOR_LED_4,
   LUXAFOR_LED_5,
   LUXAFOR_LED_6,
-  LUXAFOR_LED_A,
-  LUXAFOR_LED_B,
+  LUXAFOR_LED_BACK,
+  LUXAFOR_LED_FRONT,
   LUXAFOR_LED_ALL,
 
   // Waves

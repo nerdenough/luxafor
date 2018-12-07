@@ -48,17 +48,17 @@ Activates one of the 8 pre-programmed Luxafor patterns. Affects all LEDs.
 
 #### LEDs
 
-| Constant          | Description      |
-| ----------------- | ---------------- |
-| `LUXAFOR_LED_1`   | Front lower LED  |
-| `LUXAFOR_LED_2`   | Front middle LED |
-| `LUXAFOR_LED_3`   | Front upper LED  |
-| `LUXAFOR_LED_4`   | Rear lower LED   |
-| `LUXAFOR_LED_5`   | Rear middle LED  |
-| `LUXAFOR_LED_6`   | Rear upper LED   |
-| `LUXAFOR_LED_A`   | All rear LEDs    |
-| `LUXAFOR_LED_B`   | All front LEDs   |
-| `LUXAFOR_LED_ALL` | All LEDs         |
+| Constant            | Description      |
+| ------------------- | ---------------- |
+| `LUXAFOR_LED_1`     | Front lower LED  |
+| `LUXAFOR_LED_2`     | Front middle LED |
+| `LUXAFOR_LED_3`     | Front upper LED  |
+| `LUXAFOR_LED_4`     | Rear lower LED   |
+| `LUXAFOR_LED_5`     | Rear middle LED  |
+| `LUXAFOR_LED_6`     | Rear upper LED   |
+| `LUXAFOR_LED_FRONT` | All front LEDs   |
+| `LUXAFOR_LED_BACK`  | All rear LEDs    |
+| `LUXAFOR_LED_ALL`   | All LEDs         |
 
 #### Waves
 
