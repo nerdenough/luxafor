@@ -9,7 +9,7 @@ A simple JS library to control your [Luxafor](https://luxafor.com) device.
 Install @nerdenough/luxafor using either npm or yarn.
 
 ```sh
-npm install -S @nerdenough/luxafor
+npm install --save @nerdenough/luxafor
 # or
 yarn add @nerdenough/luxafor
 ```
@@ -20,7 +20,7 @@ Here's a simple example of how you can change the front LEDs to be red.
 
 ```js
 const luxafor = require('@nerdenough/luxafor')
-luxafor.color({ led: luxafor.LUXAFOR_LED_B, red: 255 })
+luxafor.color({ led: luxafor.LUXAFOR_LED_FRONT, red: 255 })
 ```
 
 ## In Depth
