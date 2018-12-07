@@ -1,183 +1,120 @@
 import { HID } from 'node-hid'
 
-// Lights
-export const LUXAFOR_LIGHT_1 = 1
-export const LUXAFOR_LIGHT_2 = 2
-export const LUXAFOR_LIGHT_3 = 3
-export const LUXAFOR_LIGHT_4 = 4
-export const LUXAFOR_LIGHT_5 = 5
-export const LUXAFOR_LIGHT_6 = 6
-export const LUXAFOR_LIGHT_FRONT = 0x41
-export const LUXAFOR_LIGHT_BACK = 0x42
-export const LUXAFOR_LIGHT_ALL = 0xff
+// Ids for the Luxafor device
+const vid = 0x04d8
+const pid = 0xf372
+
+// Nil byte
+const NIL = 0x00
 
 // Modes
-export const LUXAFOR_MODE_COLOR = 1
-export const LUXAFOR_MODE_FADE = 2
-export const LUXAFOR_MODE_STROBE = 3
-export const LUXAFOR_MODE_WAVE = 4
-export const LUXAFOR_MODE_PATTERN = 6
+const LUXAFOR_MODE_COLOR = 0x01
+const LUXAFOR_MODE_FADE = 0x02
+const LUXAFOR_MODE_STROBE = 0x03
+const LUXAFOR_MODE_WAVE = 0x04
+const LUXAFOR_MODE_PATTERN = 0x06
 
-// Paterns
-export const LUXAFOR_PATTERN_POLICE = 5
+// LEDs
+export const LUXAFOR_LED_1 = 0x01
+export const LUXAFOR_LED_2 = 0x02
+export const LUXAFOR_LED_3 = 0x03
+export const LUXAFOR_LED_4 = 0x04
+export const LUXAFOR_LED_5 = 0x05
+export const LUXAFOR_LED_6 = 0x06
+export const LUXAFOR_LED_A = 0x41
+export const LUXAFOR_LED_B = 0x42
+export const LUXAFOR_LED_ALL = 0xff
+
+// Waves
+export const LUXAFOR_WAVE_1 = 0x01
+export const LUXAFOR_WAVE_2 = 0x02
+export const LUXAFOR_WAVE_3 = 0x03
+export const LUXAFOR_WAVE_4 = 0x04
+export const LUXAFOR_WAVE_5 = 0x05
+
+// Patterns
+export const LUXAFOR_PATTERN_1 = 0x01
+export const LUXAFOR_PATTERN_2 = 0x02
+export const LUXAFOR_PATTERN_3 = 0x03
+export const LUXAFOR_PATTERN_4 = 0x04
+export const LUXAFOR_PATTERN_5 = 0x05
+export const LUXAFOR_PATTERN_6 = 0x06
+export const LUXAFOR_PATTERN_7 = 0x07
+export const LUXAFOR_PATTERN_8 = 0x08
+
+const device = new HID(vid, pid)
+const write = bytes => device.write(bytes)
 
 /**
- * Determines the transition bytes based on the mode being executed.
+ * Sets the colour for the chosen LEDs with the specified colour values. Setting
+ * the speed will fade to the new colour instead of an instant change.
  *
- * @param {Number} mode Lighting mode
- * @param {Number} speed Transition speed
- * @param {Number} repeat Number of repetitions
- * @returns {Array} Transition bytes
+ * @param {Object} options Strobe options
+ * @param {Number} options.led LEDs to use this effect
+ * @param {Number} options.red Red color value
+ * @param {Number} options.green Green color value
+ * @param {Number} options.blue Blue color value
+ * @param {Number} options.speed Fade speed
  */
-const getTransitionBytes = (mode, speed, repeat) => {
-  const bytes = {}
-  bytes[LUXAFOR_MODE_COLOR] = [0, 0, 0]
-  bytes[LUXAFOR_MODE_FADE] = [speed, 0, 0]
-  bytes[LUXAFOR_MODE_STROBE] = [speed, 0, repeat]
-  bytes[LUXAFOR_MODE_WAVE] = [0, repeat, speed]
-  bytes[LUXAFOR_MODE_PATTERN] = [0, 0, 0]
-
-  return bytes[mode]
+export const color = ({
+  led = LUXAFOR_LED_ALL,
+  red = 0,
+  green = 0,
+  blue = 0,
+  speed = 0
+}) => {
+  const mode = speed ? LUXAFOR_MODE_FADE : LUXAFOR_MODE_COLOR
+  return write([mode, led, red, green, blue, speed, NIL, NIL])
 }
 
 /**
- * @class Luxafor
+ * Activates the strobe effect for the chosen LEDs with the specified color
+ * values, speed, and repetitions.
+ *
+ * @param {Object} options Strobe options
+ * @param {Number} options.led LEDs to use this effect
+ * @param {Number} options.red Red color value
+ * @param {Number} options.green Green color value
+ * @param {Number} options.blue Blue color value
+ * @param {Number} options.speed Speed of the strobe effect
+ * @param {Number} options.repeat Number of times to repeat the strobe effect
  */
-export class Luxafor {
-  /**
-   * Constructor for the Luxafor class. Connects to the Luxafor device.
-   *
-   * @param {Number} vid Vendor ID
-   * @param {Number} pid Product ID
-   */
-  constructor(vid = 1240, pid = 62322) {
-    this.reset()
-    this.device = new HID(vid, pid)
-  }
+export const strobe = ({
+  led = LUXAFOR_LED_ALL,
+  red = 0,
+  green = 0,
+  blue = 0,
+  speed = 10,
+  repeat = 5
+}) => write([LUXAFOR_MODE_STROBE, led, red, green, blue, speed, NIL, repeat])
 
-  /**
-   * Writes bytes for each of the specified lights and resets the data to its
-   * default.
-   */
-  execute() {
-    if (!this.data.lights.length) {
-      this.write(this.data)
-    }
+/**
+ * Activates one of 5 wave patterns with the specified color values, speed, and
+ * repetitions. Affects all LEDs.
+ *
+ * @param {Object} options Wave options
+ * @param {Number} options.wave Wave type to show
+ * @param {Number} options.red Red color value
+ * @param {Number} options.green Green color value
+ * @param {Number} options.blue Blue color value
+ * @param {Number} options.speed Speed of the wave effect
+ * @param {Number} options.repeat Number of times to repeat the wave effect
+ */
+export const wave = ({
+  wave = LUXAFOR_WAVE_1,
+  red = 0,
+  green = 0,
+  blue = 0,
+  speed = 10,
+  repeat = 5
+}) => write([LUXAFOR_MODE_WAVE, wave, red, green, blue, NIL, repeat, speed])
 
-    this.data.lights.forEach(light => {
-      this.data.light = light
-      this.write(this.data)
-    })
-
-    this.reset()
-    return this
-  }
-
-  /**
-   * Resets all data to its default values.
-   */
-  reset() {
-    this.data = {
-      color: { red: 0, green: 0, blue: 0 },
-      light: LUXAFOR_LIGHT_ALL,
-      lights: [],
-      mode: LUXAFOR_MODE_COLOR,
-      speed: 0,
-      repeat: 0
-    }
-  }
-
-  /**
-   * Sets the color as an RGB value.
-   *
-   * @param {Number} red Red color value (0-255)
-   * @param {Number} green Green color value (0-255)
-   * @param {Number} blue Blue color value (0-255)
-   */
-  setColor(red, green, blue) {
-    this.data.color = { red, green, blue }
-    return this
-  }
-
-  /**
-   * Sets the light to change.
-   *
-   * @param {Number} light Light to change
-   */
-  setLight(light) {
-    this.data.light = light
-    return this
-  }
-
-  /**
-   * Sets the lights to change.
-   *
-   * @param {Array} lights Lights to change
-   */
-  setLights(lights) {
-    this.data.lights = lights
-    return this
-  }
-
-  /**
-   * Sets the lighting mode.
-   *
-   * @param {Number} mode Lighting mode
-   */
-  setMode(mode) {
-    this.data.mode = mode
-    return this
-  }
-
-  /**
-   * Sets the Luxafor pattern.
-   *
-   * @param {Number} pattern Luxafor pattern
-   */
-  setPattern(pattern) {
-    this.data.mode = LUXAFOR_MODE_PATTERN
-    this.data.pattern = pattern
-    return this
-  }
-
-  /**
-   * Sets the number of repetitions for a transition.
-   *
-   * @param {Number} repeat Number of repetitions
-   */
-  setRepeat(repeat) {
-    this.data.repeat = repeat
-    return this
-  }
-
-  /**
-   * Sets the speed of the transition.
-   *
-   * @param {Number} speed Transition speed
-   */
-  setSpeed(speed) {
-    this.data.speed = speed
-    return this
-  }
-
-  /**
-   * Writes bytes to Luxafor. If a default pattern is specified it will override
-   * the selection of lights.
-   *
-   * @param {Object} data Data to write to Luxafor
-   * @param {Object} data.color RGB color values
-   * @param {Number} data.color.red Red color value (0-255)
-   * @param {Number} data.color.green Green color value (0-255)
-   * @param {Number} data.color.blue Blue color value (0-255)
-   * @param {Number} data.light Light to change
-   * @param {Number} data.mode Luxafor mode
-   * @param {Number} data.pattern Luxafor pattern
-   * @param {Number} data.repeat Times to repeat the transition (0-255)
-   * @param {Number} data.speed Speed of the transition (0-255)
-   */
-  write({ color, light, mode, pattern, speed, repeat }) {
-    const bytes = [mode, pattern || light, color.red, color.green, color.blue]
-    this.device.write([...bytes, ...getTransitionBytes(mode, speed, repeat)])
-    return this
-  }
-}
+/**
+ * Activates one of the 8 pre-programmed Luxafor patterns. Affects all LEDs.
+ *
+ * @param {Object} options Pattern options
+ * @param {Number} options.pattern Luxafor pattern to show
+ * @param {Number} options.repeat Number of times to repeat the pattern
+ */
+export const pattern = ({ pattern = LUXAFOR_PATTERN_1, repeat = 5 }) =>
+  write([LUXAFOR_MODE_PATTERN, pattern, repeat, NIL, NIL, NIL, NIL, NIL])
